@@ -16,6 +16,7 @@ def test_open_first_product_card(page):
 
     expect(page.locator("body")).to_contain_text(product_name, timeout=10000)
 
+
 def test_product_page_has_size_selector_and_add_to_cart_button(page):
     page.goto(BASE_URL, wait_until="domcontentloaded", timeout=30000)
 
@@ -38,6 +39,7 @@ def test_product_page_has_size_selector_and_add_to_cart_button(page):
     add_to_cart_button = page.get_by_text("ДОБАВИТЬ В КОРЗИНУ", exact=True).first
     expect(add_to_cart_button).to_be_visible()
 
+
 def test_add_product_to_cart_shows_success_message(page):
     page.goto(BASE_URL, wait_until="domcontentloaded", timeout=30000)
 
@@ -54,7 +56,9 @@ def test_add_product_to_cart_shows_success_message(page):
 
     add_to_cart_button.click()
 
-    expect(page.locator("body")).to_contain_text(
+    success_message = page.locator(".t706__bubble-text").first
+
+    expect(success_message).to_contain_text(
         f"{product_name} добавлено в корзину",
         timeout=10000
     )

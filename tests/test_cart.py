@@ -19,12 +19,14 @@ def test_added_product_is_displayed_in_cart(page):
 
     add_to_cart_button.click()
 
-    expect(page.locator("body")).to_contain_text(
+    success_message = page.locator(".t706__bubble-text").first
+    expect(success_message).to_contain_text(
         f"{product_name} добавлено в корзину",
         timeout=10000
     )
 
     cart_icon = page.locator("a.cartcopy[href='cartcopy_elem']").filter(visible=True).first
+    expect(cart_icon).to_be_visible(timeout=10000)
     cart_icon.click()
 
     cart_window = page.locator(".t706__cartwin-content")
