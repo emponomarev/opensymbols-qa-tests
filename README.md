@@ -1,5 +1,7 @@
 # Open Symbols QA Tests
 
+![UI Tests](https://github.com/emponomarev/opensymbols-qa-tests/actions/workflows/tests.yml/badge.svg)
+
 Автоматизированные UI-тесты для интернет-магазина Open Symbols Uniform.
 
 ## Стек
