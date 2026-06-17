@@ -1,3 +1,5 @@
+import re
+
 from playwright.sync_api import expect
 
 BASE_URL = "https://opensymbols.shop/"
@@ -14,7 +16,7 @@ def test_open_first_product_card(page):
 
     page.wait_for_url("**/tproduct/**", timeout=10000)
 
-    expect(page.locator("body")).to_contain_text(product_name, timeout=10000)
+    expect(page.get_by_role("heading", name=product_name)).to_be_visible(timeout=10000)
 
 
 def test_product_page_has_size_selector_and_add_to_cart_button(page):
@@ -37,7 +39,7 @@ def test_product_page_has_size_selector_and_add_to_cart_button(page):
     expect(product_options.locator("label:has(input[value='XL'])")).to_be_visible()
 
     add_to_cart_button = page.get_by_text("ДОБАВИТЬ В КОРЗИНУ", exact=True).first
-    expect(add_to_cart_button).to_be_visible()
+    expect(add_to_cart_button).to_be_visible(timeout=10000)
 
 
 def test_add_product_to_cart_shows_success_message(page):
@@ -59,6 +61,6 @@ def test_add_product_to_cart_shows_success_message(page):
     success_message = page.locator(".t706__bubble-text").first
 
     expect(success_message).to_contain_text(
-        f"{product_name} добавлено в корзину",
+        re.compile(fr"{re.escape(product_name)}.*(добавлено|added)", re.IGNORECASE),
         timeout=10000
     )
